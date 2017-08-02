@@ -20,22 +20,13 @@ if(!isset($error_message)) {
 		require_once("dbcontroller.php");
 		require_once ('vendor/autoload.php');
 		$db_handle = new DBController();
-
-
-
-			//$resul  = mysqli_query("select id from registered_users LIMIT 1,1");
-		//$rowcount = mysqli_num_rows("select * from registered_users");
-
-	
-		$id = $rowcount + 1; 
 		$email = $_POST["email"];
 		$DOB = $_POST["dob"];
-		$contact = $_POST["contact"];
-		$unique_id = "cnjdkfndj".$id.$contact;
+		$email = $_POST["contact"];
 	
 		
-		$query = "INSERT INTO registered_users (Name,school,course,contact,dob, gender,email,unique_id) VALUES
-		('" . $_POST["Name"] . "', '" . $_POST["school"] . "', '" . $_POST["course"] . "', '" . md5($_POST["contact"]) . "', '" . $_POST["dob"] . "', '" . $_POST["gender"] . "','" . $_POST["email"] . "','".$unique_id."')";
+		$query = "INSERT INTO registered_users (Name,school,course,contact,dob, gender,email) VALUES
+		('" . $_POST["Name"] . "', '" . $_POST["school"] . "', '" . $_POST["course"] . "', '" . md5($_POST["contact"]) . "', '" . $_POST["dob"] . "', '" . $_POST["gender"] . "','" . $_POST["email"] . "')";
 		$result = $db_handle->insertQuery($query);
 
 		if(!empty($result)) {
@@ -51,8 +42,7 @@ $from = new SendGrid\Email("FROM_NAME", "nehakansal1005@gmail.com");
 $subject = "You are successfully registered with us";
 $to = new SendGrid\Email("TO_NAME", $email);
 $content = new SendGrid\Content("text/html", 
-	" <p>Here would be the content<p>
-	your unique id : {$unique_id} "
+	" Here would be the content "
 );
 
 /*Response*/
